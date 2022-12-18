@@ -1,0 +1,39 @@
+{
+  "name": "mobile-wikipedia-redilector",
+  "version": "0.1.0",
+  "description": "Redirects mobile wikipedia pages",
+  "main": "index.js",
+  "scripts": {
+      "build": "npm run assemble && npm run lint && npm run test && npm run web-ext:build",
+      "build:clean": "npm run clean && npm run build",
+      "assemble": "npm run compile && npm run copy",
+      "compile": "npm run compile:background",
+      "compile:background": "esbuild src/background.ts --bundle --minify --sourcemap --target=chrome99,firefox93 --outfile=build/out/background.js",
+      "copy": "npm run copy:manifest",
+      "copy:manifest": "cpx static/manifest.json ./build/out",
+      "web-ext:run": "cd ./build/out && web-ext run",
+      "web-ext:build": "cd ./build/out && web-ext build --overwrite-dest",
+      "web-ext:lint": "cd ./build/out && web-ext lint",
+      "clean": "rimraf build",
+      "test": "echo \"no test\"",
+      "lint": "npm run eslint:lint && npm run web-ext:lint",
+      "eslint:lint": "eslint src",
+      "typecheck": "tsc --noEmit"
+  },
+  "author": "",
+  "license": "MIT",
+    "dependencies": {
+        "lodash": "^4.17.21"
+    },
+    "devDependencies": {
+        "@types/lodash": "^4.14.191",
+        "@typescript-eslint/eslint-plugin": "^5.46.1",
+        "@typescript-eslint/parser": "^5.46.1",
+        "cpx": "^1.5.0",
+        "esbuild": "^0.16.8",
+        "eslint": "^8.30.0",
+        "rimraf": "^3.0.2",
+        "typescript": "^4.9.4",
+        "web-ext": "^7.4.0"
+    }
+}
